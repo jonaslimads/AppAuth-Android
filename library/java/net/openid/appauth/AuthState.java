@@ -631,14 +631,15 @@ public class AuthState {
         if (mRefreshToken == null) {
             throw new IllegalStateException("No refresh token available for refresh request");
         }
-        if (mLastAuthorizationResponse == null) {
+//        if (mLastAuthorizationResponse == null) {
+        if (getAuthorizationServiceConfiguration() == null) {
             throw new IllegalStateException(
                     "No authorization configuration available for refresh request");
         }
 
         return new TokenRequest.Builder(
-                mLastAuthorizationResponse.request.configuration,
-                mLastAuthorizationResponse.request.clientId)
+                getAuthorizationServiceConfiguration(),
+                "android-app")
                 .setGrantType(GrantTypeValues.REFRESH_TOKEN)
                 .setScope(null)
                 .setRefreshToken(mRefreshToken)
